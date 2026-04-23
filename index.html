@@ -13,31 +13,25 @@
       font-family: 'Courier New', monospace;
       -webkit-tap-highlight-color: transparent; user-select: none;
     }
-
     #gw { width: 100%; max-width: 380px; padding: 0 12px; }
-
     canvas { display: block; width: 100%; border-radius: 16px; touch-action: none; cursor: pointer; }
     #canvas-wrap { position: relative; }
     #ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; border-radius: 16px; overflow: hidden; }
     #score-display { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); font-size: 36px; font-weight: 500; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.4); letter-spacing: 2px; }
-
     #overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: rgba(0,0,0,0.52); border-radius: 16px; pointer-events: all; padding: 20px; overflow-y: auto; }
     #overlay.hidden { display: none; }
     .ov-title { font-size: 26px; font-weight: 700; color: #fff; letter-spacing: 3px; text-transform: uppercase; }
     .ov-sub { font-size: 12px; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-align: center; }
     .ov-score { font-size: 48px; font-weight: 500; color: #FFD166; line-height: 1; }
     .medal { font-size: 34px; }
-
     .tap-btn { padding: 12px 32px; background: #FFD166; color: #1a1a2e; font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; letter-spacing: 2px; border: none; border-radius: 50px; cursor: pointer; text-transform: uppercase; pointer-events: all; }
     .tap-btn:active { transform: scale(0.96); }
     .tap-btn.sec { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.35); font-weight: 500; font-size: 12px; padding: 9px 24px; }
-
     .group-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px; width: 100%; pointer-events: all; }
     .g-btn { padding: 9px 6px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.07); color: #fff; font-family: 'Courier New', monospace; font-size: 11px; text-align: center; cursor: pointer; line-height: 1.3; }
     .g-btn:active { transform: scale(0.95); }
     .g-btn .g-name { font-weight: 700; font-size: 12px; display: block; }
     .g-btn .g-best { font-size: 10px; color: #FFD166; display: block; margin-top: 2px; }
-
     #lb-wrap { width: 100%; margin-top: 12px; background: #12122a; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.09); }
     .lb-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-wrap: wrap; gap: 6px; }
     .lb-title { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 1.5px; text-transform: uppercase; }
@@ -58,7 +52,6 @@
     .lb-gname { font-size: 12px; color: rgba(255,255,255,0.82); flex: 1; }
     .lb-pts { font-size: 13px; font-weight: 700; color: #FFD166; }
     .lb-empty { padding: 18px 14px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.25); }
-
     .saving-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.2); border-top-color: #FFD166; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
@@ -83,8 +76,8 @@
       <div class="lb-right">
         <span class="lb-sync" id="sync-status">loading...</span>
         <div class="lb-tab-row">
-          <button class="lb-tab active" id="tab-best" onclick="showTab('best')">Best</button>
-          <button class="lb-tab" id="tab-games" onclick="showTab('games')">Games</button>
+          <button class="lb-tab active" id="tab-best"  onclick="showTab('best')">Best</button>
+          <button class="lb-tab"        id="tab-games" onclick="showTab('games')">Games</button>
         </div>
       </div>
     </div>
@@ -93,36 +86,6 @@
 </div>
 
 <script>
-  /* ── Supabase config ── */
-  const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_KEY = process.env.SUPABASE_KEY;
-  const TABLE = 'group_scores';
-
-  const BASE_HEADERS = {
-    'Content-Type': 'application/json',
-    'apikey': SUPABASE_KEY,
-    'Authorization': `Bearer ${SUPABASE_KEY}`
-  };
-
-  async function dbLoad() {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*`, { headers: BASE_HEADERS });
-    if (!res.ok) throw new Error('load failed');
-    return res.json();
-  }
-
-  async function dbUpsert(groupName, newBest, newGames) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
-      method: 'POST',
-      headers: { ...BASE_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
-      body: JSON.stringify({ group_name: groupName, best_score: newBest, games_played: newGames })
-    });
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(err);
-    }
-    return res.json();
-  }
-
   /* ── Group config ── */
   const GROUP_COLORS = ['#FF6B6B','#FFD166','#06D6A0','#118AB2','#9B5DE5','#F15BB5','#00BBF9','#FEE440','#FB5607','#8338EC'];
   const GROUPS = ['Red Hawks','Gold Stars','Green Wave','Blue Bolts','Purple Pack','Pink Squad','Cyan Crew','Yellow Yetis','Orange Owls','Violet Vipers'];
@@ -130,21 +93,19 @@
   let groupData = GROUPS.map((name, i) => ({ name, color: GROUP_COLORS[i], best: 0, games: 0 }));
   let currentTab = 'best';
 
-  function setSyncStatus(text, cls = '') {
-    const el = document.getElementById('sync-status');
-    if (el) { el.textContent = text; el.className = 'lb-sync ' + cls; }
-  }
-
+  /* ── API calls — no keys here, handled server-side ── */
   async function loadScores() {
     setSyncStatus('loading...');
     try {
-      const rows = await dbLoad();
+      const res = await fetch('/api/scores');
+      if (!res.ok) throw new Error();
+      const rows = await res.json();
       rows.forEach(row => {
         const g = groupData.find(g => g.name === row.group_name);
         if (g) { g.best = row.best_score || 0; g.games = row.games_played || 0; }
       });
       setSyncStatus('live', 'ok');
-    } catch(e) {
+    } catch {
       setSyncStatus('offline', 'err');
     }
     renderLeaderboard();
@@ -154,17 +115,34 @@
     const g = groupData[groupIdx];
     const newBest  = Math.max(g.best, score);
     const newGames = g.games + 1;
-    g.best  = newBest;
-    g.games = newGames;
-    renderLeaderboard();
     setSyncStatus('saving...');
     try {
-      await dbUpsert(g.name, newBest, newGames);
+      const res = await fetch('/api/scores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          group_name:   g.name,
+          best_score:   newBest,
+          games_played: newGames
+        })
+      });
+      if (!res.ok) throw new Error();
+      const saved = await res.json();
+      g.best  = saved.best_score  ?? newBest;
+      g.games = saved.games_played ?? newGames;
       setSyncStatus('saved ✓', 'ok');
       setTimeout(() => setSyncStatus('live', 'ok'), 2500);
-    } catch(e) {
+    } catch {
+      g.best  = newBest;
+      g.games = newGames;
       setSyncStatus('save failed', 'err');
     }
+    renderLeaderboard();
+  }
+
+  function setSyncStatus(text, cls = '') {
+    const el = document.getElementById('sync-status');
+    if (el) { el.textContent = text; el.className = 'lb-sync ' + cls; }
   }
 
   /* ── Game engine ── */

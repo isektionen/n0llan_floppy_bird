@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "jetpack-joyride",
+    "title": "Jetpack Joyride",
+    "description": "The current playable runner. Open it from the hub or the games folder.",
+    "path": "/games/jetpack-joyride/",
+    "status": "playable",
+    "featured": true
+  },
+  {
+    "slug": "neon-drift",
+    "title": "Neon Drift",
+    "description": "A placeholder slot for a future racing game.",
+    "path": "/games/neon-drift/",
+    "status": "coming-soon",
+    "featured": false
+  },
+  {
+    "slug": "orbit-dash",
+    "title": "Orbit Dash",
+    "description": "A placeholder slot for a future space arcade game.",
+    "path": "/games/orbit-dash/",
+    "status": "coming-soon",
+    "featured": false
+  }
+]

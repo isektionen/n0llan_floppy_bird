@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 40">
+  <defs>
+    <linearGradient id="hatBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="hatBrim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d6b4ff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect x="14" y="3" width="24" height="28" rx="4" fill="url(#hatBody)"/>
+  <rect x="11" y="22" width="30" height="8" rx="4" fill="url(#hatBrim)"/>
+  <rect x="8" y="24" width="36" height="4" rx="2" fill="#2d1b69" opacity="0.9"/>
+  <rect x="34" y="9" width="6" height="14" rx="2" fill="#374151"/>
+  <circle cx="38" cy="8" r="3" fill="#fbbf24"/>
+  <path d="M40 8l8-3-5 6z" fill="#f97316"/>
+</svg>

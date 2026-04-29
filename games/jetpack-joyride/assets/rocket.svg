@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 28">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6b7280"/>
+      <stop offset="50%" stop-color="#d1d5db"/>
+      <stop offset="100%" stop-color="#6b7280"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="50%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <path d="M6 14h30c5 0 10-3 16-8-2 6-2 12 0 20-6-5-11-8-16-8H6z" fill="url(#body)" stroke="#374151" stroke-width="1"/>
+  <path d="M36 14h14l-3 4h-11z" fill="#ef4444"/>
+  <path d="M8 14l-6-4 2 6-2 6z" fill="#94a3b8"/>
+  <circle cx="18" cy="14" r="4" fill="#93c5fd" stroke="#1e3a8a" stroke-width="1"/>
+  <path d="M0 13l7-3v8z" fill="url(#flame)"/>
+  <path d="M1 14l6-2v4z" fill="#fff7ed" opacity="0.7"/>
+  <path d="M1 12l6 2-6 2z" fill="#f59e0b" opacity="0.8"/>
+  <path d="M52 10l4 4-4 4c1-3 1-5 0-8z" fill="#ef4444"/>
+</svg>

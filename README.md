@@ -23,11 +23,13 @@ Lägg till dessa i Vercel under Settings → Environment Variables. Lägg aldrig
 
 ## Lokal utveckling
 
-Eftersom spelet anropar `/api/scores` behöver du Vercel CLI för att köra projektet lokalt. Installera det och starta en lokal server med följande kommandon:
+Eftersom spelet anropar `/api/scores` behöver du en lokal Node-server som kan köra både statiska filer och API-routen. Den lokala servern i `server.js` används bara för utveckling på din egen dator. I den hostade versionen på Vercel används fortfarande `api/scores.js` för backend och `index.html` för själva spelet.
+
+Installera beroendena och starta den lokala servern med:
 
 ```bash
-npm i -g vercel
-vercel dev
+npm install
+npm run dev
 ```
 
 Öppna sedan `http://localhost:3000` i webbläsaren. Skapa även en `.env.local`-fil i rotkatalogen med dina miljövariabler — den ignoreras automatiskt av Git och pushas aldrig till GitHub:

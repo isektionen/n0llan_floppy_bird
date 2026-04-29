@@ -51,8 +51,8 @@ export default async function handler(req, res) {
     }
 
     // Validate score range
-    if (typeof best_score !== 'number' || best_score < 0 || best_score > 500) {
-      return res.status(400).json({ error: 'Score must be between 0 and 500' });
+    if (typeof best_score !== 'number' || best_score < 0 || best_score > 10000) {
+      return res.status(400).json({ error: 'Score must be between 0 and 10000' });
     }
 
     try {

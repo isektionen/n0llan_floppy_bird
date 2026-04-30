@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Arcade Hub</title>
+  <title>n0llangames</title>
   <style>
-    :root { color-scheme: dark; }
+    :root {
+      --kth-blue: #004791;
+      --navy-blue: #001933;
+      --sky-blue: #6298D2;
+      --sand: #EBE5E0;
+      --porter-brun: #7c5a3e;
+      --komplement-bla: #3e607c;
+      color-scheme: dark;
+    }
     * { box-sizing: border-box; }
     html, body {
       margin: 0; min-height: 100%;
       font-family: 'Courier New', monospace;
       background:
-        radial-gradient(circle at top, rgba(124,58,237,0.2), transparent 35%),
-        linear-gradient(180deg, #060612 0%, #09091a 45%, #060610 100%);
+        radial-gradient(circle at top, rgba(0, 71, 145, 0.3), transparent 35%),
+        linear-gradient(180deg, #001933 0%, #001021 45%, #000810 100%);
       color: #fff;
     }
     body { display: grid; place-items: center; padding: 16px 12px 28px; }
     .wrap { width: min(980px, 100%); display: grid; gap: 18px; }
     .panel {
       border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(10,10,24,0.72);
+      background: rgba(0, 25, 51, 0.72);
       backdrop-filter: blur(12px);
       border-radius: 24px;
       box-shadow: 0 20px 80px rgba(0,0,0,0.35);
@@ -32,13 +40,15 @@
       align-items: stretch;
     }
     .eyebrow {
-      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-      color: #c084fc; margin-bottom: 18px;
+      font-size: 24px; letter-spacing: 6px; text-transform: uppercase;
+      font-weight: 800;
+      color: var(--porter-brun); margin-bottom: 24px;
+      text-shadow: 0 0 20px rgba(124, 90, 62, 0.4);
     }
     h1 {
       margin: 0; font-size: clamp(42px, 9vw, 86px); line-height: 0.95;
-      letter-spacing: 1px; text-transform: uppercase; max-width: 8ch;
-      text-shadow: 0 0 30px rgba(124,58,237,0.25);
+      letter-spacing: 1px; text-transform: uppercase; max-width: 12ch;
+      text-shadow: 0 0 30px rgba(62, 96, 124, 0.4);
     }
     .copy {
       max-width: 52ch; color: rgba(255,255,255,0.72);
@@ -48,15 +58,20 @@
     .btn {
       padding: 14px 18px; border-radius: 999px; border: none; cursor: pointer;
       font: inherit; letter-spacing: 2px; text-transform: uppercase;
-      transition: transform 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     }
     .btn.primary {
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
-      color: #fff; box-shadow: 0 18px 30px rgba(124,58,237,0.28);
+      background: linear-gradient(135deg, var(--kth-blue), var(--porter-brun));
+      color: #fff; box-shadow: 0 18px 30px rgba(0, 71, 145, 0.28);
     }
     .btn.secondary {
-      background: transparent; color: rgba(255,255,255,0.7);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(62, 96, 124, 0.15);
+      color: var(--komplement-bla);
+      border: 1px solid var(--komplement-bla);
+    }
+    .btn.secondary:hover {
+      background: rgba(62, 96, 124, 0.25);
+      color: #fff;
     }
     .btn:active { transform: scale(0.98); }
     .games {
@@ -75,27 +90,18 @@
       color: #fff; font-family: inherit;
       display: grid; gap: 6px;
     }
-    .game-card:hover { transform: translateY(-1px); border-color: rgba(192,132,252,0.45); }
+    .game-card:hover { transform: translateY(-1px); border-color: var(--komplement-bla); }
     .game-card.featured {
-      background: linear-gradient(135deg, rgba(124,58,237,0.34), rgba(10,10,24,0.45));
-      border-color: rgba(124,58,237,0.45);
+      background: linear-gradient(135deg, rgba(0, 71, 145, 0.34), rgba(124, 90, 62, 0.25));
+      border-color: var(--porter-brun);
     }
     .game-card.disabled { opacity: 0.55; cursor: not-allowed; }
     .badge {
       font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-      color: #c084fc;
+      color: var(--sky-blue);
     }
     .name { font-size: 22px; font-weight: 700; line-height: 1.05; }
     .desc { font-size: 13px; color: rgba(255,255,255,0.68); line-height: 1.6; }
-    .info {
-      padding: 16px 20px; display: flex; justify-content: space-between; gap: 16px;
-      flex-wrap: wrap; align-items: center;
-    }
-    .info strong {
-      display: block; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .info span { color: rgba(255,255,255,0.62); font-size: 13px; }
     @media (max-width: 820px) {
       .hero { grid-template-columns: 1fr; }
     }
@@ -105,32 +111,21 @@
   <main class="wrap">
     <section class="panel hero">
       <div>
-        <div class="eyebrow">Arcade hub</div>
-        <h1>Choose your game</h1>
-        <p class="copy">Every game lives in its own folder under <strong>games/</strong>. Add a new folder, add one entry to the catalog, and the hub picks it up without changing the game itself.</p>
+        <div class="eyebrow">n0llangames</div>
+        <h1>Välj ditt spel</h1>
+        <p class="copy">Välkommen till n0llangames. Här hittar du de senaste spelen från I-sektionen. Spela direkt i webbläsaren!</p>
         <div class="actions">
-          <button class="btn primary" id="launch-first">Play Jetpack Joyride</button>
-          <button class="btn secondary" id="view-games">View games</button>
+          <button class="btn primary" id="launch-first">Spela Jetpack Joyride</button>
+          <button class="btn secondary" id="view-games">Visa alla spel</button>
         </div>
       </div>
 
       <aside class="panel games" id="games-panel">
-        <div class="section-label">Games</div>
+        <div class="section-label">Spel</div>
         <div class="game-list" id="game-list">
-          <div class="desc">Loading games...</div>
+          <div class="desc">Laddar spel...</div>
         </div>
       </aside>
-    </section>
-
-    <section class="panel info">
-      <div>
-        <strong>Developer friendly</strong>
-        <span>One folder per game. No shared game logic in the root page.</span>
-      </div>
-      <div>
-        <strong>Layout</strong>
-        <span>games/&lt;slug&gt;/index.html for each game.</span>
-      </div>
     </section>
   </main>
 
@@ -142,22 +137,23 @@
     async function loadCatalog() {
       try {
         const response = await fetch('/games/catalog.json');
-        if (!response.ok) throw new Error('Unable to load catalog');
+        if (!response.ok) throw new Error('Kunde inte ladda katalogen');
         const games = await response.json();
         renderGames(games);
         const firstPlayable = games.find(game => game.status === 'playable');
         if (firstPlayable) {
+          launchFirst.innerText = `Spela ${firstPlayable.title}`;
           launchFirst.addEventListener('click', () => window.location.href = firstPlayable.path);
         }
       } catch {
-        gameList.innerHTML = '<div class="desc">No games found.</div>';
+        gameList.innerHTML = '<div class="desc">Inga spel hittades.</div>';
       }
     }
 
     function renderGames(games) {
       gameList.innerHTML = games.map(game => `
         <button class="game-card ${game.featured ? 'featured' : ''}" data-path="${game.path}">
-          <span class="badge">${game.status === 'playable' ? 'Play now' : 'Coming soon'}</span>
+          <span class="badge">${game.status === 'playable' ? 'Spela nu' : 'Kommer snart'}</span>
           <span class="name">${game.title}</span>
           <span class="desc">${game.description}</span>
         </button>

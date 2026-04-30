@@ -2,7 +2,7 @@
   {
     "slug": "jetpack-joyride",
     "title": "Jetpack Joyride",
-    "description": "The current playable runner. Open it from the hub or the games folder.",
+    "description": "Ett fartfyllt spel där du flyger med en jetpack. Öppna det från hubben eller games-mappen.",
     "path": "/games/jetpack-joyride/",
     "status": "playable",
     "featured": true
@@ -10,7 +10,7 @@
   {
     "slug": "neon-drift",
     "title": "Neon Drift",
-    "description": "A placeholder slot for a future racing game.",
+    "description": "En plats för ett framtida racingspel i neonmiljö.",
     "path": "/games/neon-drift/",
     "status": "coming-soon",
     "featured": false
@@ -18,7 +18,7 @@
   {
     "slug": "orbit-dash",
     "title": "Orbit Dash",
-    "description": "A placeholder slot for a future space arcade game.",
+    "description": "En plats för ett framtida rymdäventyr.",
     "path": "/games/orbit-dash/",
     "status": "coming-soon",
     "featured": false

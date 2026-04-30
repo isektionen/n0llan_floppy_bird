@@ -115,7 +115,7 @@
 </head>
 <body>
   <main class="shell">
-    <a class="back" href="/">← Back to games</a>
+    <a class="back" href="/">← Tillbaka till spelen</a>
     <section class="stage">
       <canvas id="c" width="420" height="560"></canvas>
       <div class="ui">
@@ -123,29 +123,29 @@
         <div class="dist" id="dist-display">0 m</div>
         <div class="overlay" id="overlay">
           <div class="title">Jetpack Joyride</div>
-          <div class="sub">hold to fly • avoid obstacles</div>
-          <button class="btn" id="start-btn">Play</button>
+          <div class="sub">håll för att flyga • undvik hinder</div>
+          <button class="btn" id="start-btn">Spela</button>
         </div>
       </div>
     </section>
 
     <div class="stats">
-      <div class="stat"><span class="stat-label">BEST</span><span class="stat-val" id="best-display">0m</span></div>
-      <div class="stat"><span class="stat-label">RUNS</span><span class="stat-val" id="runs-display">0</span></div>
+      <div class="stat"><span class="stat-label">REKORD</span><span class="stat-val" id="best-display">0m</span></div>
+      <div class="stat"><span class="stat-label">FÖRSÖK</span><span class="stat-val" id="runs-display">0</span></div>
     </div>
 
     <section class="leaderboard">
       <div class="lb-header">
-        <span class="lb-title">Leaderboard</span>
+        <span class="lb-title">Topplista</span>
         <div class="lb-right">
-          <span class="lb-sync" id="sync-status">loading...</span>
+          <span class="lb-sync" id="sync-status">laddar...</span>
           <div class="lb-tabs">
-            <button class="lb-tab active" id="tab-best">Best</button>
-            <button class="lb-tab" id="tab-games">Games</button>
+            <button class="lb-tab active" id="tab-best">Bäst</button>
+            <button class="lb-tab" id="tab-games">Spelade</button>
           </div>
         </div>
       </div>
-      <div id="lb-body"><div class="lb-empty">Loading scores...</div></div>
+      <div id="lb-body"><div class="lb-empty">Laddar poäng...</div></div>
     </section>
   </main>
 
@@ -413,7 +413,7 @@
     }
 
     async function loadScores() {
-      setSyncStatus('loading...');
+      setSyncStatus('laddar...');
       try {
         const res = await fetch('/api/scores');
         if (!res.ok) throw new Error('load failed');
@@ -433,7 +433,7 @@
       const g = groupData[groupIdx];
       const newBest = Math.max(g.best, score);
       const newGames = g.games + 1;
-      setSyncStatus('saving...');
+      setSyncStatus('sparar...');
       try {
         const res = await fetch('/api/scores', {
           method: 'POST',
@@ -444,29 +444,29 @@
         const saved = await res.json();
         g.best = saved.best_score ?? newBest;
         g.games = saved.games_played ?? newGames;
-        setSyncStatus('saved ✓', 'ok');
+        setSyncStatus('sparad ✓', 'ok');
         setTimeout(() => setSyncStatus('live', 'ok'), 2500);
       } catch {
         g.best = newBest;
         g.games = newGames;
-        setSyncStatus('save failed', 'err');
+        setSyncStatus('kunde inte spara', 'err');
       }
       renderLeaderboard();
     }
 
     function showDeadScreen() {
       overlay.innerHTML = `
-        <div class="title">Game Over</div>
+        <div class="title">Spelet slut</div>
         <div style="font-size:38px">${scoreCount >= 300 ? '🥇' : scoreCount >= 150 ? '🥈' : scoreCount >= 60 ? '🥉' : '💀'}</div>
         <div style="font-size:52px;font-weight:700;color:#c084fc;line-height:1">${scoreCount}m</div>
-        <div class="sub" style="margin-bottom:2px">Choose your group to save the score</div>
+        <div class="sub" style="margin-bottom:2px">Välj din grupp för att spara poängen</div>
         <div class="group-grid">${GROUPS.map((g, i) => `
           <div class="g-btn" id="gbtn-${i}" onclick="submitScore(${i})" style="border-color:${GROUP_COLORS[i]}99">
             <span class="g-name" style="color:${GROUP_COLORS[i]}">${g}</span>
-            <span class="g-best">best: ${groupData[i].best}m</span>
+            <span class="g-best">bästa: ${groupData[i].best}m</span>
           </div>`).join('')}
         </div>
-        <button class="btn secondary" onclick="startGame()">Skip • play again</button>
+        <button class="btn secondary" onclick="startGame()">Hoppa över • spela igen</button>
       `;
       overlay.classList.remove('hidden');
     }

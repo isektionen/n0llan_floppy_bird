@@ -392,7 +392,7 @@
 
     function checkCollisions() {
       const hb = hatBounds();
-      if (hb.top <= PLAY_TOP || hb.bottom >= PLAY_BOT) return true;
+// Golv och tak dödar inte längre
       for (const o of obstacles) {
         if (o.type === 'laser' && hb.right > o.x && hb.left < o.x + o.w) {
           if (hb.top < o.gapY || hb.bottom > o.gapY + o.gapSize) return true;

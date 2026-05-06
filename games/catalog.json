@@ -2,25 +2,9 @@
   {
     "slug": "jetpack-joyride",
     "title": "Jetpack Joyride",
-    "description": "Ett fartfyllt spel där du flyger med en jetpack. Öppna det från hubben eller games-mappen.",
+    "description": "Ett fartfyllt spel där du flyger med en jetpack.",
     "path": "/games/jetpack-joyride/",
     "status": "playable",
     "featured": true
-  },
-  {
-    "slug": "neon-drift",
-    "title": "Neon Drift",
-    "description": "En plats för ett framtida racingspel i neonmiljö.",
-    "path": "/games/neon-drift/",
-    "status": "coming-soon",
-    "featured": false
-  },
-  {
-    "slug": "orbit-dash",
-    "title": "Orbit Dash",
-    "description": "En plats för ett framtida rymdäventyr.",
-    "path": "/games/orbit-dash/",
-    "status": "coming-soon",
-    "featured": false
   }
 ]

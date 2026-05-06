@@ -3,317 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>n0llangames</title>
+  <title>Jetpack Joyride — n0llangames</title>
   <style>
-    :root {
-      --kth-blue: #004791;
-      --navy-blue: #001933;
-      --sky-blue: #6298D2;
-      --sand: #EBE5E0;
-      --porter-brun: #7c5a3e;
-      --komplement-bla: #3e607c;
-      color-scheme: dark;
-    }
     * { box-sizing: border-box; }
-    html, body {
-      margin: 0; min-height: 100%;
-      font-family: 'Courier New', monospace;
-      background:
-        radial-gradient(circle at top, rgba(0, 71, 145, 0.3), transparent 35%),
-        linear-gradient(180deg, #001933 0%, #001021 45%, #000810 100%);
-      color: #fff;
-    }
-    body { display: grid; place-items: center; padding: 16px 12px 28px; }
-    .wrap { width: min(980px, 100%); display: grid; gap: 18px; }
-    .panel {
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(0, 25, 51, 0.72);
-      backdrop-filter: blur(12px);
-      border-radius: 24px;
-      box-shadow: 0 20px 80px rgba(0,0,0,0.35);
-    }
-    .hero {
-      padding: 30px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
-      gap: 18px;
-      align-items: stretch;
-    }
-    .eyebrow {
-      font-size: 24px; letter-spacing: 6px; text-transform: uppercase;
-      font-weight: 800;
-      color: var(--porter-brun); margin-bottom: 24px;
-      text-shadow: 0 0 20px rgba(124, 90, 62, 0.4);
-    }
-    h1 {
-      margin: 0; font-size: clamp(42px, 9vw, 86px); line-height: 0.95;
-      letter-spacing: 1px; text-transform: uppercase; max-width: 12ch;
-      text-shadow: 0 0 30px rgba(62, 96, 124, 0.4);
-    }
-    .copy {
-      max-width: 52ch; color: rgba(255,255,255,0.72);
-      font-size: 15px; line-height: 1.7; margin-top: 18px;
-    }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-    .btn {
-      padding: 14px 18px; border-radius: 999px; border: none; cursor: pointer;
-      font: inherit; letter-spacing: 2px; text-transform: uppercase;
-      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-    }
-    .btn.primary {
-      background: linear-gradient(135deg, var(--kth-blue), var(--porter-brun));
-      color: #fff; box-shadow: 0 18px 30px rgba(0, 71, 145, 0.28);
-    }
-    .btn.primary:disabled {
-      opacity: 0.45; cursor: not-allowed;
-      box-shadow: none;
-    }
-    .btn.secondary {
-      background: rgba(62, 96, 124, 0.15);
-      color: var(--komplement-bla);
-      border: 1px solid var(--komplement-bla);
-    }
-    .btn.secondary:hover {
-      background: rgba(62, 96, 124, 0.25);
-      color: #fff;
-    }
-    .btn:active:not(:disabled) { transform: scale(0.98); }
-    .games {
-      padding: 20px; display: grid; gap: 12px;
-    }
-    .section-label {
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-    .game-list { display: grid; gap: 12px; }
-    .game-card {
-      width: 100%; text-align: left; cursor: pointer;
-      border-radius: 18px; padding: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      color: #fff; font-family: inherit;
-      display: grid; gap: 6px;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-    .game-card:hover { transform: translateY(-1px); border-color: var(--komplement-bla); }
-    .game-card.featured {
-      background: linear-gradient(135deg, rgba(0, 71, 145, 0.34), rgba(124, 90, 62, 0.25));
-      border-color: var(--porter-brun);
-    }
-    .game-card.disabled { opacity: 0.55; cursor: not-allowed; }
-    .badge {
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--sky-blue);
-    }
-    .badge.locked { color: #ff6b6b; }
-    .name { font-size: 22px; font-weight: 700; line-height: 1.05; }
-    .desc { font-size: 13px; color: rgba(255,255,255,0.68); line-height: 1.6; }
-
-    /* Play counter pill */
-    .plays-left {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 18px; padding: 8px 14px; border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      font-size: 12px; letter-spacing: 1px; color: rgba(255,255,255,0.65);
-    }
-    .plays-left .pip {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #06D6A0;
-    }
-    .plays-left .pip.empty { background: rgba(255,255,255,0.2); }
-    .plays-left.exhausted { border-color: rgba(255,107,107,0.4); }
-    .plays-left.exhausted .label { color: #ff6b6b; }
-
-    /* Locked banner */
-    .locked-banner {
-      margin-top: 14px; padding: 12px 16px; border-radius: 14px;
-      background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3);
-      font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5;
-      display: none;
-    }
-    .locked-banner.visible { display: block; }
-
-    @media (max-width: 820px) {
-      .hero { grid-template-columns: 1fr; }
-    }
+    html, body { margin: 0; min-height: 100%; font-family: 'Courier New', monospace; }
+    body { display: grid; place-items: center; padding: 16px; background: linear-gradient(180deg,#060612 0%,#09091a 45%,#060610 100%); color:#fff }
+    .shell { width: min(520px, 100%); }
+    .plays-left { display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); margin-bottom:12px; font-size:13px }
+    .plays-left .pip { width:10px; height:10px; border-radius:50%; background:#06D6A0 }
+    .plays-left .pip.empty { background: rgba(255,255,255,0.16) }
+    .plays-left.exhausted { border-color: rgba(255,107,107,0.4) }
+    .locked-banner { margin:10px 0; padding:10px 12px; border-radius:10px; background: rgba(255,107,107,0.08); border:1px solid rgba(255,107,107,0.22); display:none }
+    .locked-banner.visible { display:block }
+    .back { display:inline-block; margin-bottom:12px; padding:8px 12px; border-radius:999px; color:rgba(255,255,255,0.8); text-decoration:none; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); font-size:12px }
+    .stage{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,0.35)}
+    canvas{display:block;width:100%;touch-action:none;background:#080812}
+    .ui{position:absolute;inset:0;pointer-events:none}
+    .score,.dist{position:absolute;left:50%;transform:translateX(-50%);text-shadow:0 0 12px rgba(120,80,255,0.8)}
+    .score{top:14px;font-size:32px;font-weight:700}
+    .dist{top:52px;font-size:13px;color:rgba(255,255,255,0.5)}
+    .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(0,0,0,0.6);pointer-events:all;padding:20px;text-align:center}
+    .overlay.hidden{display:none}
+    .title{font-size:22px;font-weight:700;letter-spacing:4px;text-transform:uppercase}
+    .sub{font-size:11px;color:rgba(255,255,255,0.55)}
+    .btn{padding:13px 36px;background:#7c3aed;color:#fff;border:none;border-radius:999px;cursor:pointer;font-weight:700}
+    .btn.secondary{padding:8px 22px;background:transparent;border:1px solid rgba(255,255,255,0.12)}
+    .stats{display:flex;justify-content:space-around;gap:12px;padding:10px 14px;margin-top:10px;background:#0e0e1f;border-radius:10px;border:1px solid rgba(255,255,255,0.07)}
+    .stat-label{display:block;font-size:10px;color:rgba(255,255,255,0.35)}
+    .stat-val{font-size:18px;font-weight:700;color:#c084fc}
+    .leaderboard{width:100%;margin-top:10px;background:#0e0e1f;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.07)}
+    .lb-header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .lb-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+    .lb-body{padding:8px 0}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <section class="panel hero">
-      <div>
-        <div class="eyebrow">n0llangames</div>
-        <h1>Välj ditt spel</h1>
-        <p class="copy">Välkommen till n0llangames. Här hittar du de senaste spelen från I-sektionen. Spela direkt i webbläsaren!</p>
+  <main class="shell">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="plays-left" id="plays-counter">
+        <span class="pip" id="pip-1"></span>
+        <span class="pip" id="pip-2"></span>
+        <span class="pip" id="pip-3"></span>
+        <span id="plays-label">Laddar...</span>
+      </div>
+      <a class="back" href="/">Hem</a>
+    </div>
 
-        <!-- Play counter -->
-        <div class="plays-left" id="plays-counter">
-          <span class="pip" id="pip-1"></span>
-          <span class="pip" id="pip-2"></span>
-          <span class="pip" id="pip-3"></span>
-          <span class="label" id="plays-label">Laddar...</span>
-        </div>
+    <div class="locked-banner" id="locked-banner">🎩 Du har spelat klart för idag! Kom tillbaka imorgon för fler omgångar.</div>
 
-        <!-- Locked message -->
-        <div class="locked-banner" id="locked-banner">
-          🎩 Du har spelat klart för idag! Kom tillbaka imorgon för fler omgångar.
-        </div>
-
-        <div class="actions">
-          <button class="btn primary" id="launch-first" disabled>Spela Jetpack Joyride</button>
-          <button class="btn secondary" id="view-games">Visa alla spel</button>
+    <section class="stage">
+      <canvas id="c" width="420" height="560"></canvas>
+      <div class="ui">
+        <div class="score" id="score-display">0</div>
+        <div class="dist"  id="dist-display">0 m</div>
+        <div class="overlay" id="overlay">
+          <div class="title">Jetpack Joyride</div>
+          <div class="sub">håll för att flyga • undvik hinder</div>
+          <button class="btn" id="start-btn">Spela</button>
         </div>
       </div>
+    </section>
 
-      <aside class="panel games" id="games-panel">
-        <div class="section-label">Spel</div>
-        <div class="game-list" id="game-list">
-          <div class="desc">Laddar spel...</div>
-        </div>
-      </aside>
+    <div class="stats">
+      <div class="stat"><span class="stat-label">REKORD</span><span class="stat-val" id="best-display">0m</span></div>
+      <div class="stat"><span class="stat-label">FÖRSÖK</span><span class="stat-val" id="runs-display">0</span></div>
+    </div>
+
+    <section class="leaderboard">
+      <div class="lb-header"><span class="lb-title">Topplista</span><span id="sync-status" style="font-size:12px;color:rgba(255,255,255,0.4)">laddar...</span></div>
+      <div id="lb-body" class="lb-body"><div style="padding:16px;text-align:center;color:rgba(255,255,255,0.18)">Laddar poäng...</div></div>
     </section>
   </main>
 
   <script>
-    /* ── Play limit config ── */
+    /* Daily play limit (shared from the hub) */
     const MAX_PLAYS_PER_DAY = 3;
     const STORAGE_KEY = 'n0llan_plays';
+    function getTodayString(){ return new Date().toDateString(); }
+    function getPlayData(){ try{ const raw = localStorage.getItem(STORAGE_KEY); if(!raw) return {date:getTodayString(),count:0}; const data = JSON.parse(raw); if(data.date !== getTodayString()) return {date:getTodayString(),count:0}; return data }catch{return {date:getTodayString(),count:0}} }
+    function getPlaysLeft(){ const d=getPlayData(); return Math.max(0, MAX_PLAYS_PER_DAY - (d.count||0)) }
+    function registerPlay(){ const d=getPlayData(); d.count=(d.count||0)+1; localStorage.setItem(STORAGE_KEY, JSON.stringify(d)) }
+    function canPlay(){ return getPlaysLeft()>0 }
+    function updatePlayCounter(){ const left = getPlaysLeft(); const counter = document.getElementById('plays-counter'); const label = document.getElementById('plays-label'); const banner = document.getElementById('locked-banner'); if(!label) return; for(let i=1;i<=MAX_PLAYS_PER_DAY;i++){ const pip = document.getElementById(`pip-${i}`); if(!pip) continue; pip.classList.toggle('empty', i>left) } if(left===0){ label.textContent='Inga omgångar kvar idag'; counter.classList.add('exhausted'); banner.classList.add('visible'); } else { label.textContent=`${left} av ${MAX_PLAYS_PER_DAY} omgångar kvar idag`; counter.classList.remove('exhausted'); banner.classList.remove('visible'); } }
 
-    function getTodayString() {
-      return new Date().toDateString(); // e.g. "Wed May 06 2026"
-    }
+    /* Jetpack game code (kept from games/jetpack-joyride, adjusted to use assets path)
+       and wired to use the daily play-limit above. */
+    const GROUP_COLORS = ['#FF6B6B','#FFD166','#06D6A0','#118AB2','#9B5DE5','#F15BB5','#00BBF9','#FEE440','#FB5607','#8338EC'];
+    const GROUPS = ['Red Hawks','Gold Stars','Green Wave','Blue Bolts','Purple Pack','Pink Squad','Cyan Crew','Yellow Yetis','Orange Owls','Violet Vipers'];
+    const SPRITE_PATH = 'games/jetpack-joyride/assets/';
 
-    function getPlayData() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return { date: getTodayString(), count: 0 };
-        const data = JSON.parse(raw);
-        // If it's a new day, reset the counter
-        if (data.date !== getTodayString()) {
-          return { date: getTodayString(), count: 0 };
-        }
-        return data;
-      } catch {
-        return { date: getTodayString(), count: 0 };
-      }
-    }
+    const canvas  = document.getElementById('c');
+    const ctx     = canvas.getContext('2d');
+    const overlay = document.getElementById('overlay');
+    const scoreEl = document.getElementById('score-display');
+    const distEl  = document.getElementById('dist-display');
+    const bestEl  = document.getElementById('best-display');
+    const runsEl  = document.getElementById('runs-display');
+    const syncEl  = document.getElementById('sync-status');
+    const lbBody  = document.getElementById('lb-body');
 
-    function getPlaysLeft() {
-      const data = getPlayData();
-      return Math.max(0, MAX_PLAYS_PER_DAY - data.count);
-    }
+    const W = 420, H = 560; const GROUND_H = 50, CEIL_H = 30; const PLAY_TOP = CEIL_H, PLAY_BOT = H - GROUND_H, PLAY_H = PLAY_BOT - PLAY_TOP;
+    const HAT_X = 80, HAT_W = 52, HAT_H = 40; const GRAVITY = 0.55, JETPACK = -0.7, MAX_UP = -9, MAX_DOWN = 10;
+    const OBS_SPEED_START = 3.5, OBS_SPEED_MAX = 7.5, OBS_INTERVAL = 130;
 
-    function registerPlay() {
-      const data = getPlayData();
-      data.count = (data.count || 0) + 1;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
+    let state = 'idle', raf = 0, frame = 0, distance = 0, gameSpeed = OBS_SPEED_START;
+    let hat, obstacles, particles, bgStars, bgLayers; let pressing = false, bestScore = 0, totalRuns = 0, scoreCount = 0; let currentTab = 'best';
+    let groupData = GROUPS.map((name,i)=>({name,color:GROUP_COLORS[i],best:0,games:0}));
 
-    function canPlay() {
-      return getPlaysLeft() > 0;
-    }
+    const sprites = { hat: new Image(), rocket: new Image(), building: new Image(), buildingTall: new Image() };
+    sprites.hat.src = `${SPRITE_PATH}hat.png`; sprites.rocket.src = `${SPRITE_PATH}rocket.svg`; sprites.building.src = `${SPRITE_PATH}building.svg`; sprites.buildingTall.src = `${SPRITE_PATH}building-tall.svg`;
 
-    /* ── Update UI based on plays left ── */
-    function updatePlayCounter() {
-      const left = getPlaysLeft();
-      const counter = document.getElementById('plays-counter');
-      const label   = document.getElementById('plays-label');
-      const banner  = document.getElementById('locked-banner');
-      const btn     = document.getElementById('launch-first');
+    function setSyncStatus(text, cls=''){ syncEl.textContent = text; syncEl.className = cls ? `lb-sync ${cls}` : 'lb-sync' }
+    function spriteReady(img){ return img.complete && img.naturalWidth>0 }
+    function drawSprite(img,x,y,w,h,fallback){ if(spriteReady(img)) ctx.drawImage(img,x,y,w,h); else if(fallback) fallback() }
+    function burst(x,y,col,n=10){ for(let i=0;i<n;i++){ const ang=(Math.PI*2*i)/n+Math.random()*0.5; const spd=2+Math.random()*4; particles.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:1,col,r:2+Math.random()*3}) } }
 
-      // Update pip dots
-      for (let i = 1; i <= MAX_PLAYS_PER_DAY; i++) {
-        const pip = document.getElementById(`pip-${i}`);
-        if (!pip) continue;
-        pip.classList.toggle('empty', i > left);
-      }
-
-      if (left === 0) {
-        label.textContent = 'Inga omgångar kvar idag';
-        counter.classList.add('exhausted');
-        banner.classList.add('visible');
-        btn.disabled = true;
-      } else {
-        label.textContent = `${left} av ${MAX_PLAYS_PER_DAY} omgångar kvar idag`;
-        counter.classList.remove('exhausted');
-        banner.classList.remove('visible');
-        btn.disabled = false;
-      }
-    }
-
-    /* ── Launch with play registration ── */
-    function launchGame(path) {
-      if (!canPlay()) {
-        updatePlayCounter();
-        return;
-      }
-      registerPlay();
-      updatePlayCounter();
-      window.location.href = path;
-    }
-
-    /* ── Game catalog ── */
-    const gameList   = document.getElementById('game-list');
-    const launchFirst = document.getElementById('launch-first');
-    const viewGames  = document.getElementById('view-games');
-
-    async function loadCatalog() {
-      try {
-        const response = await fetch('/games/catalog.json');
-        if (!response.ok) throw new Error('Kunde inte ladda katalogen');
-        const games = await response.json();
-        renderGames(games);
-
-        const firstPlayable = games.find(g => g.status === 'playable');
-        if (firstPlayable) {
-          launchFirst.innerText = `Spela ${firstPlayable.title}`;
-          launchFirst.addEventListener('click', () => launchGame(firstPlayable.path));
-        }
-      } catch {
-        gameList.innerHTML = '<div class="desc">Inga spel hittades.</div>';
-      }
-
-      // Always update counter after catalog loads
-      updatePlayCounter();
-    }
-
-    function renderGames(games) {
-      const left = getPlaysLeft();
-      gameList.innerHTML = games.map(game => {
-        const locked = game.status === 'playable' && left === 0;
-        return `
-          <button
-            class="game-card ${game.featured ? 'featured' : ''} ${locked ? 'disabled' : ''}"
-            data-path="${game.path}"
-            data-playable="${game.status === 'playable'}"
-            ${locked ? 'disabled' : ''}
-          >
-            <span class="badge ${locked ? 'locked' : ''}">
-              ${locked ? 'Låst idag' : game.status === 'playable' ? 'Spela nu' : 'Kommer snart'}
-            </span>
-            <span class="name">${game.title}</span>
-            <span class="desc">${game.description}</span>
-          </button>
-        `;
-      }).join('');
-
-      gameList.querySelectorAll('[data-path]').forEach(card => {
-        card.addEventListener('click', () => {
-          if (card.dataset.playable === 'true') {
-            launchGame(card.dataset.path);
-          } else {
-            window.location.href = card.dataset.path;
-          }
-        });
-      });
-    }
-
-    viewGames.addEventListener('click', () => {
-      document.getElementById('games-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    loadCatalog();
+    function initGame(){ frame=0; distance=0; scoreCount=0; gameSpeed=OBS_SPEED_START; pressing=false; hat={y:PLAY_TOP+PLAY_H/2,vy:0,jetOn:false,animFrame:0}; obstacles=[]; particles=[]; bgStars=Array.from({length:60},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.3,spd:Math.random()*0.5+0.2,b:Math.random()*Math.PI*2})); bgLayers=[{x:0,spd:0.3,elements:buildBgLayer(0.3)},{x:0,spd:0.7,elements:buildBgLayer(0.7)}]; scoreEl.textContent='0'; distEl.textContent='0 m' }
+    function buildBgLayer(spd){ return Array.from({length:6},(_,i)=>({x:i*80+Math.random()*40,h:30+Math.random()*60,w:20+Math.random()*30,col:spd<0.5? '#1a1a3a' : '#12122e'})) }
+    function spawnObstacle(){ const type=Math.random(); if(type<0.4){ const gapSize=120+Math.random()*60; const gapY=PLAY_TOP+20+Math.random()*(PLAY_H-gapSize-40); obstacles.push({type:'laser',x:W+20,gapY,gapSize,w:14,phase:0}) } else if(type<0.7){ const y=PLAY_TOP+30+Math.random()*(PLAY_H-80); obstacles.push({type:'zapper',x:W+20,y,spd:1.5+Math.random(),w:60,h:14,phase:0}) } else { const y=PLAY_TOP+30+Math.random()*(PLAY_H-60); obstacles.push({type:'missile',x:W+30,y,phase:0,trail:[]}) } }
+    function drawBg(){ ctx.fillStyle='#080812'; ctx.fillRect(0,0,W,H); bgStars.forEach(s=>{ s.b+=0.02; s.x-=s.spd; if(s.x<0){s.x=W; s.y=Math.random()*H} const a=0.3+0.3*Math.sin(s.b); ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(180,160,255,${a})`; ctx.fill() }); bgLayers.forEach(layer=>{ layer.x-=layer.spd; layer.elements.forEach(el=>{ const ex = ((el.x - layer.x) % (W+60) + W+60) % (W+60) - 30; drawBuilding(ex, PLAY_BOT-el.h, el.w, el.h, el.h>58); ctx.fillStyle='rgba(120,100,255,0.12)'; for(let wy=PLAY_BOT-el.h+8; wy<PLAY_BOT-8; wy+=12) for(let wx=ex+4; wx<ex+el.w-4; wx+=10) if(Math.random()>0.45) ctx.fillRect(wx,wy,5,6) }) }) }
+    function drawGround(){ ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,W,CEIL_H); ctx.fillStyle='#7c3aed'; ctx.fillRect(0,CEIL_H-2,W,2); const cgl=ctx.createLinearGradient(0,CEIL_H-2,0,CEIL_H+20); cgl.addColorStop(0,'rgba(124,58,237,0.3)'); cgl.addColorStop(1,'rgba(124,58,237,0)'); ctx.fillStyle=cgl; ctx.fillRect(0,CEIL_H-2,W,22); ctx.fillStyle='#1a0a3a'; ctx.fillRect(0,PLAY_BOT,W,GROUND_H); ctx.fillStyle='#7c3aed'; ctx.fillRect(0,PLAY_BOT,W,2); const fgl=ctx.createLinearGradient(0,PLAY_BOT,0,PLAY_BOT-20); fgl.addColorStop(0,'rgba(124,58,237,0.3)'); fgl.addColorStop(1,'rgba(124,58,237,0)'); ctx.fillStyle=fgl; ctx.fillRect(0,PLAY_BOT-20,W,22); ctx.strokeStyle='rgba(124,58,237,0.2)'; ctx.lineWidth=1; const off=(frame*gameSpeed*0.5)%40; for(let x=-off;x<W;x+=40){ ctx.beginPath(); ctx.moveTo(x,PLAY_BOT+2); ctx.lineTo(x,H); ctx.stroke() } }
+    function drawBuilding(x,y,width,height,tall=false){ const img = tall? sprites.buildingTall : sprites.building; drawSprite(img,x,y,width,height,()=>{ ctx.fillStyle = tall ? '#12122e' : '#1a1a3a'; ctx.fillRect(x,y,width,height) }) }
+    function drawHat(){ const hx=HAT_X, hy=hat.y; hat.animFrame++; if(hat.jetOn){ const flameLen = 14 + Math.sin(hat.animFrame*0.4)*6; const fg = ctx.createLinearGradient(hx-20, hy+8, hx-20-flameLen, hy+8); fg.addColorStop(0,'rgba(251,191,36,0.9)'); fg.addColorStop(0.5,'rgba(249,115,22,0.7)'); fg.addColorStop(1,'rgba(239,68,68,0)'); ctx.beginPath(); ctx.moveTo(hx-18, hy+3); ctx.lineTo(hx-18-flameLen, hy+8); ctx.lineTo(hx-18, hy+14); ctx.closePath(); ctx.fillStyle=fg; ctx.fill() } ctx.save(); ctx.translate(hx,hy); ctx.rotate(Math.max(-0.25,Math.min(0.5, hat.vy*0.04))); drawSprite(sprites.hat, -HAT_W/2, -HAT_H, HAT_W, HAT_H, ()=>{ ctx.fillStyle='#7B4A2D'; ctx.beginPath(); ctx.roundRect(-HAT_W/2, -HAT_H, HAT_W, HAT_H, 4); ctx.fill() }); ctx.restore() }
+    function drawObstacles(){ obstacles.forEach(o=>{ o.phase += 0.08; if(o.type==='laser'){ const pulse = 0.7 + 0.3*Math.sin(o.phase*3); const bg = ctx.createLinearGradient(o.x,0,o.x+o.w,0); bg.addColorStop(0,'rgba(239,68,68,0)'); bg.addColorStop(0.3,`rgba(239,68,68,${pulse})`); bg.addColorStop(0.7,`rgba(248,113,113,${pulse})`); bg.addColorStop(1,'rgba(239,68,68,0)'); ctx.fillStyle=bg; ctx.fillRect(o.x,PLAY_TOP,o.w,o.gapY-PLAY_TOP); ctx.fillRect(o.x,o.gapY+o.gapSize,o.w,PLAY_BOT-(o.gapY+o.gapSize)) } if(o.type==='zapper'){ o.y += Math.sin(o.phase)*o.spd; o.y = Math.max(PLAY_TOP+10, Math.min(PLAY_BOT-o.h-10, o.y)); ctx.fillStyle='rgba(250,204,21,0.2)'; ctx.fillRect(o.x,o.y,o.w,o.h); ctx.strokeStyle='rgba(250,204,21,0.95)'; ctx.lineWidth=3; ctx.beginPath(); let ex=o.x; ctx.moveTo(ex,o.y+o.h/2); while(ex<o.x+o.w){ ex += 8 + Math.random()*6; ctx.lineTo(Math.min(ex,o.x+o.w), o.y+4+Math.random()*(o.h-8)) } ctx.stroke() } if(o.type==='missile'){ o.trail.push({x:o.x,y:o.y}); if(o.trail.length>18) o.trail.shift(); o.trail.forEach((pt,i)=>{ const a=(i/o.trail.length)*0.5; ctx.beginPath(); ctx.arc(pt.x+10,pt.y+5,4*(i/o.trail.length),0,Math.PI*2); ctx.fillStyle=`rgba(249,115,22,${a})`; ctx.fill() }); drawSprite(sprites.rocket, o.x-2, o.y-8, 56, 28, ()=>{ ctx.fillStyle='#6b7280'; ctx.beginPath(); ctx.roundRect(o.x,o.y,42,12,[6,6,2,2]); ctx.fill(); ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.moveTo(o.x+42,o.y+2); ctx.lineTo(o.x+52,o.y+6); ctx.lineTo(o.x+42,o.y+10); ctx.closePath(); ctx.fill() }) } }) }
+    function drawParticles(){ for(let i=particles.length-1;i>=0;i--){ const p=particles[i]; p.x+=p.vx; p.y+=p.vy; p.vx*=0.92; p.vy*=0.92; p.life-=0.04; if(p.life<=0){ particles.splice(i,1); continue } ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2); ctx.fillStyle=p.col+Math.floor(p.life*255).toString(16).padStart(2,'0'); ctx.fill() } }
+    function hatBounds(){ return { left: HAT_X - HAT_W/2 + 6, right: HAT_X + HAT_W/2 - 6, top: hat.y - HAT_H + 6, bottom: hat.y + 4 } }
+    function checkCollisions(){ const hb = hatBounds(); for(const o of obstacles){ if(o.type==='laser' && hb.right>o.x && hb.left < o.x+o.w) if(hb.top<o.gapY || hb.bottom>o.gapY+o.gapSize) return true; if(o.type==='zapper' && hb.right>o.x+4 && hb.left < o.x+o.w-4 && hb.bottom>o.y && hb.top<o.y+o.h) return true; if(o.type==='missile' && hb.right>o.x+4 && hb.left<o.x+48 && hb.bottom>o.y && hb.top<o.y+12) return true } return false }
+    function renderLeaderboard(){ const sorted = [...groupData].sort((a,b)=> currentTab==='best' ? b.best-a.best : b.games-a.games); lbBody.innerHTML = sorted.map((g,i)=>`<div style="display:flex;align-items:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.04);gap:10px"><div style="width:18px;text-align:center;color:rgba(255,255,255,0.3)">${i+1}</div><div style="width:9px;height:9px;border-radius:50%;background:${g.color};margin-right:10px"></div><div style="flex:1">${g.name}</div><div style="font-weight:700;color:#c084fc">${g.best===0? '—': g.best+'m'}</div></div>`).join('') }
+    async function loadScores(){ setSyncStatus('laddar...'); try{ const res = await fetch('/api/scores'); if(!res.ok) throw new Error(); const rows = await res.json(); rows.forEach(row=>{ const g = groupData.find(e => e.name === row.group_name); if(g) { g.best = row.best_score||0; g.games = row.games_played||0 } }); setSyncStatus('live ok'); }catch{ setSyncStatus('offline err') } renderLeaderboard(); }
+    async function saveScore(groupIdx, score){ const g = groupData[groupIdx]; const newBest = Math.max(g.best, score); const newGames = g.games + 1; setSyncStatus('sparar...'); try{ const res = await fetch('/api/scores',{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ group_name: g.name, best_score: newBest, games_played: newGames }) }); if(!res.ok) throw new Error(); const saved = await res.json(); g.best = saved.best_score ?? newBest; g.games = saved.games_played ?? newGames; setSyncStatus('sparad ✓'); setTimeout(()=> setSyncStatus('live ok'), 2500); }catch{ g.best = newBest; g.games = newGames; setSyncStatus('kunde inte spara err') } renderLeaderboard(); }
+    function showDeadScreen(){ const medal = scoreCount>=300?'🥇':scoreCount>=150?'🥈':scoreCount>=60?'🥉':'💀'; overlay.innerHTML = ` <div class="title">Spelet slut</div> <div style="font-size:38px">${medal}</div> <div style="font-size:52px;font-weight:700;color:#c084fc;line-height:1">${scoreCount}m</div> <div class="sub" style="margin-bottom:2px">Välj din grupp för att spara poängen</div> <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;width:100%">${GROUPS.map((g,i)=>`<div class="g-btn" id="gbtn-${i}" onclick="submitScore(${i})" style="border-color:${GROUP_COLORS[i]}99;padding:9px;border-radius:10px;background:rgba(255,255,255,0.07);text-align:center"><span style="font-weight:700;color:${GROUP_COLORS[i]}">${g}</span><div style="font-size:10px;color:#c084fc;margin-top:4px">bästa: ${groupData[i].best}m</div></div>`).join('')}</div> <button class="btn secondary" onclick="window.location.href='/'">Tillbaka</button>`; overlay.classList.remove('hidden') }
+    function startGame(){ if(!canPlay()){ updatePlayCounter(); overlay.innerHTML = `<div class="title">Inga omgångar kvar</div><div class="sub">Du har spelat slut för idag.</div><button class="btn secondary" onclick="window.location.href='/'">OK</button>`; overlay.classList.remove('hidden'); return } registerPlay(); updatePlayCounter(); initGame(); overlay.classList.add('hidden'); state='playing'; if(raf) cancelAnimationFrame(raf); loop(); }
+    async function submitScore(groupIdx){ document.querySelectorAll('.g-btn').forEach(b => b.style.pointerEvents = 'none'); const btn = document.getElementById(`gbtn-${groupIdx}`); if(btn) btn.innerHTML = `<span style="width:12px;height:12px;border:2px solid rgba(255,255,255,0.2);border-top-color:#c084fc;border-radius:50%;display:inline-block;animation:spin 0.7s linear infinite"></span>`; await saveScore(groupIdx, scoreCount); window.location.href = '/'; }
+    function loop(){ frame++; drawBg(); if(state==='playing'){ gameSpeed = Math.min(OBS_SPEED_MAX, OBS_SPEED_START + (frame/600)); distance += gameSpeed*0.05; hat.vy += pressing ? JETPACK : GRAVITY*0.6; hat.vy = Math.max(MAX_UP, Math.min(MAX_DOWN, hat.vy)); hat.y += hat.vy; if(hat.y - HAT_H < PLAY_TOP){ hat.y = PLAY_TOP + HAT_H; hat.vy = Math.abs(hat.vy) * 0.4 } if(hat.y > PLAY_BOT){ hat.y = PLAY_BOT; hat.vy = -Math.abs(hat.vy) * 0.4 } hat.jetOn = pressing; if(frame % OBS_INTERVAL === 0) spawnObstacle(); for(let i=obstacles.length-1;i>=0;i--){ obstacles[i].x -= gameSpeed; if(obstacles[i].x + 80 < 0) obstacles.splice(i,1) } scoreCount = Math.floor(distance); scoreEl.textContent = scoreCount; distEl.textContent = `${scoreCount} m`; if(checkCollisions()){ burst(HAT_X, hat.y, '#c084fc', 20); burst(HAT_X, hat.y, '#ffffff', 10); state='dead'; totalRuns++; if(scoreCount>bestScore) bestScore=scoreCount; bestEl.textContent = `${bestScore}m`; runsEl.textContent = totalRuns; setTimeout(showDeadScreen, 600) } } else if(state==='idle'){ hat.y = PLAY_TOP + PLAY_H/2 + Math.sin(frame*0.04)*15; hat.jetOn=false } drawObstacles(); drawParticles(); drawGround(); drawHat(); raf = requestAnimationFrame(loop) }
+    function pressStart(e){ e.preventDefault(); if(state==='idle'){ startGame(); return } if(state==='playing') pressing=true }
+    function pressEnd(e){ e.preventDefault(); pressing=false }
+    canvas.addEventListener('pointerdown', pressStart); canvas.addEventListener('pointerup', pressEnd); canvas.addEventListener('pointerleave', pressEnd); canvas.addEventListener('touchstart', pressStart, {passive:false}); canvas.addEventListener('touchend', pressEnd, {passive:false}); document.getElementById('start-btn').addEventListener('click', startGame);
+    window.startGame = startGame; window.submitScore = submitScore; initGame(); loop(); loadScores(); updatePlayCounter();
   </script>
 </body>
 </html>

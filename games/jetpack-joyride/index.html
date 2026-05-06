@@ -14,10 +14,7 @@
         linear-gradient(180deg, #060612 0%, #09091a 45%, #060610 100%);
       color: #fff;
     }
-    body {
-      display: grid; place-items: center;
-      padding: 16px 12px 28px;
-    }
+    body { display: grid; place-items: center; padding: 16px 12px 28px; }
     .shell { width: min(420px, 100%); }
     .back {
       display: inline-block; margin-bottom: 12px; padding: 10px 14px;
@@ -40,7 +37,7 @@
       text-shadow: 0 0 12px rgba(120,80,255,0.8);
     }
     .score { top: 14px; font-size: 32px; font-weight: 700; letter-spacing: 3px; }
-    .dist { top: 54px; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 2px; }
+    .dist  { top: 54px; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 2px; }
     .overlay {
       position: absolute; inset: 0; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 10px;
@@ -49,7 +46,7 @@
     }
     .overlay.hidden { display: none; }
     .title { font-size: 22px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
-    .sub { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 2px; }
+    .sub   { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 2px; }
     .btn {
       padding: 13px 36px; background: #7c3aed; color: #fff; border: none;
       border-radius: 999px; font: inherit; font-size: 13px; font-weight: 700;
@@ -69,19 +66,20 @@
     }
     .stat { text-align: center; }
     .stat-label { display: block; font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 1px; }
-    .stat-val { font-size: 18px; font-weight: 700; color: #c084fc; }
+    .stat-val   { font-size: 18px; font-weight: 700; color: #c084fc; }
     .leaderboard {
       width: 100%; margin-top: 10px; background: #0e0e1f;
       border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07);
     }
     .lb-header {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 6px;
+      padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap; gap: 6px;
     }
     .lb-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-    .lb-right { display: flex; align-items: center; gap: 8px; }
-    .lb-sync { font-size: 10px; color: rgba(255,255,255,0.3); }
-    .lb-sync.ok { color: #06D6A0; }
+    .lb-right  { display: flex; align-items: center; gap: 8px; }
+    .lb-sync   { font-size: 10px; color: rgba(255,255,255,0.3); }
+    .lb-sync.ok  { color: #06D6A0; }
     .lb-sync.err { color: #FF6B6B; }
     .lb-tabs { display: flex; gap: 5px; }
     .lb-tab {
@@ -93,12 +91,12 @@
     .lb-row { display: flex; align-items: center; padding: 8px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 10px; }
     .lb-row:last-child { border-bottom: none; }
     .lb-rank { width: 18px; text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; flex-shrink: 0; }
-    .lb-rank.gold { color: #FFD166; font-weight: 700; }
+    .lb-rank.gold   { color: #FFD166; font-weight: 700; }
     .lb-rank.silver { color: #B4B2A9; font-weight: 700; }
     .lb-rank.bronze { color: #EF9F27; font-weight: 700; }
-    .lb-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .lb-dot   { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
     .lb-gname { font-size: 12px; color: rgba(255,255,255,0.8); flex: 1; }
-    .lb-pts { font-size: 13px; font-weight: 700; color: #c084fc; }
+    .lb-pts   { font-size: 13px; font-weight: 700; color: #c084fc; }
     .lb-empty { padding: 16px 14px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.2); }
     .group-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px; width: 100%; }
     .g-btn {
@@ -109,7 +107,11 @@
     .g-btn:active { transform: scale(0.95); }
     .g-name { font-weight: 700; font-size: 12px; display: block; }
     .g-best { font-size: 10px; color: #c084fc; display: block; margin-top: 2px; }
-    .saving-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.2); border-top-color: #c084fc; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
+    .saving-spinner {
+      display: inline-block; width: 12px; height: 12px;
+      border: 2px solid rgba(255,255,255,0.2); border-top-color: #c084fc;
+      border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle;
+    }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
@@ -120,7 +122,7 @@
       <canvas id="c" width="420" height="560"></canvas>
       <div class="ui">
         <div class="score" id="score-display">0</div>
-        <div class="dist" id="dist-display">0 m</div>
+        <div class="dist"  id="dist-display">0 m</div>
         <div class="overlay" id="overlay">
           <div class="title">Jetpack Joyride</div>
           <div class="sub">håll för att flyga • undvik hinder</div>
@@ -141,7 +143,7 @@
           <span class="lb-sync" id="sync-status">laddar...</span>
           <div class="lb-tabs">
             <button class="lb-tab active" id="tab-best">Bäst</button>
-            <button class="lb-tab" id="tab-games">Spelade</button>
+            <button class="lb-tab"        id="tab-games">Spelade</button>
           </div>
         </div>
       </div>
@@ -153,16 +155,17 @@
     const GROUP_COLORS = ['#FF6B6B','#FFD166','#06D6A0','#118AB2','#9B5DE5','#F15BB5','#00BBF9','#FEE440','#FB5607','#8338EC'];
     const GROUPS = ['Red Hawks','Gold Stars','Green Wave','Blue Bolts','Purple Pack','Pink Squad','Cyan Crew','Yellow Yetis','Orange Owls','Violet Vipers'];
     const SPRITE_PATH = 'assets/';
-    const canvas = document.getElementById('c');
-    const ctx = canvas.getContext('2d');
+
+    const canvas  = document.getElementById('c');
+    const ctx     = canvas.getContext('2d');
     const overlay = document.getElementById('overlay');
     const scoreEl = document.getElementById('score-display');
-    const distEl = document.getElementById('dist-display');
-    const bestEl = document.getElementById('best-display');
-    const runsEl = document.getElementById('runs-display');
-    const syncEl = document.getElementById('sync-status');
-    const lbBody = document.getElementById('lb-body');
-    const tabBest = document.getElementById('tab-best');
+    const distEl  = document.getElementById('dist-display');
+    const bestEl  = document.getElementById('best-display');
+    const runsEl  = document.getElementById('runs-display');
+    const syncEl  = document.getElementById('sync-status');
+    const lbBody  = document.getElementById('lb-body');
+    const tabBest  = document.getElementById('tab-best');
     const tabGames = document.getElementById('tab-games');
 
     const W = 420, H = 560;
@@ -177,43 +180,29 @@
     let pressing = false, bestScore = 0, totalRuns = 0, scoreCount = 0;
     let currentTab = 'best';
     let groupData = GROUPS.map((name, i) => ({ name, color: GROUP_COLORS[i], best: 0, games: 0 }));
+
     const sprites = {
-      hat: new Image(),
-      rocket: new Image(),
-      building: new Image(),
+      hat:          new Image(),
+      rocket:       new Image(),
+      building:     new Image(),
       buildingTall: new Image()
     };
-
-    sprites.hat.src = `${SPRITE_PATH}hat.png`;
-    sprites.rocket.src = `${SPRITE_PATH}rocket.svg`;
-    sprites.building.src = `${SPRITE_PATH}building.svg`;
+    sprites.hat.src          = `${SPRITE_PATH}hat.png`;
+    sprites.rocket.src       = `${SPRITE_PATH}rocket.svg`;
+    sprites.building.src     = `${SPRITE_PATH}building.svg`;
     sprites.buildingTall.src = `${SPRITE_PATH}building-tall.svg`;
 
+    /* ── Helpers ── */
     function setSyncStatus(text, cls = '') {
       syncEl.textContent = text;
       syncEl.className = `lb-sync ${cls}`;
     }
 
-    function initGame() {
-      frame = 0; distance = 0; scoreCount = 0; gameSpeed = OBS_SPEED_START; pressing = false;
-      hat = { y: PLAY_TOP + PLAY_H / 2, vy: 0, jetOn: false, animFrame: 0 };
-      obstacles = []; particles = [];
-      bgStars = Array.from({ length: 60 }, () => ({
-        x: Math.random()*W, y: Math.random()*H,
-        r: Math.random()*1.2+0.3, spd: Math.random()*0.5+0.2, b: Math.random()*Math.PI*2
-      }));
-      bgLayers = [
-        { x: 0, spd: 0.3, elements: buildBgLayer(0.3) },
-        { x: 0, spd: 0.7, elements: buildBgLayer(0.7) }
-      ];
-      scoreEl.textContent = '0'; distEl.textContent = '0 m';
-    }
+    function spriteReady(img) { return img.complete && img.naturalWidth > 0; }
 
-    function buildBgLayer(spd) {
-      return Array.from({ length: 6 }, (_, i) => ({
-        x: i*80 + Math.random()*40, h: 30+Math.random()*60,
-        w: 20+Math.random()*30, col: spd < 0.5 ? '#1a1a3a' : '#12122e'
-      }));
+    function drawSprite(img, x, y, w, h, fallback) {
+      if (spriteReady(img)) { ctx.drawImage(img, x, y, w, h); }
+      else if (fallback) { fallback(); }
     }
 
     function burst(x, y, col, n = 10) {
@@ -224,23 +213,39 @@
       }
     }
 
-    function spriteReady(image) {
-      return image.complete && image.naturalWidth > 0;
+    /* ── Init ── */
+    function initGame() {
+      frame = 0; distance = 0; scoreCount = 0;
+      gameSpeed = OBS_SPEED_START; pressing = false;
+      hat = { y: PLAY_TOP + PLAY_H/2, vy: 0, jetOn: false, animFrame: 0 };
+      obstacles = []; particles = [];
+      bgStars = Array.from({ length: 60 }, () => ({
+        x: Math.random()*W, y: Math.random()*H,
+        r: Math.random()*1.2+0.3, spd: Math.random()*0.5+0.2, b: Math.random()*Math.PI*2
+      }));
+      bgLayers = [
+        { x: 0, spd: 0.3, elements: buildBgLayer(0.3) },
+        { x: 0, spd: 0.7, elements: buildBgLayer(0.7) }
+      ];
+      scoreEl.textContent = '0';
+      distEl.textContent  = '0 m';
     }
 
-    function drawSprite(image, x, y, width, height, fallbackDraw) {
-      if (spriteReady(image)) {
-        ctx.drawImage(image, x, y, width, height);
-      } else if (fallbackDraw) {
-        fallbackDraw();
-      }
+    function buildBgLayer(spd) {
+      return Array.from({ length: 6 }, (_, i) => ({
+        x: i*80 + Math.random()*40,
+        h: 30 + Math.random()*60,
+        w: 20 + Math.random()*30,
+        col: spd < 0.5 ? '#1a1a3a' : '#12122e'
+      }));
     }
 
+    /* ── Spawn ── */
     function spawnObstacle() {
       const type = Math.random();
       if (type < 0.4) {
         const gapSize = 120 + Math.random()*60;
-        const gapY = PLAY_TOP + 20 + Math.random()*(PLAY_H - gapSize - 40);
+        const gapY    = PLAY_TOP + 20 + Math.random()*(PLAY_H - gapSize - 40);
         obstacles.push({ type: 'laser', x: W+20, gapY, gapSize, w: 14, phase: 0 });
       } else if (type < 0.7) {
         const y = PLAY_TOP + 30 + Math.random()*(PLAY_H - 80);
@@ -251,6 +256,7 @@
       }
     }
 
+    /* ── Draw ── */
     function drawBg() {
       ctx.fillStyle = '#080812'; ctx.fillRect(0, 0, W, H);
       bgStars.forEach(s => {
@@ -266,11 +272,9 @@
           const ex = ((el.x - layer.x) % (W+60) + W+60) % (W+60) - 30;
           drawBuilding(ex, PLAY_BOT-el.h, el.w, el.h, el.h > 58);
           ctx.fillStyle = 'rgba(120,100,255,0.12)';
-          for (let wy = PLAY_BOT-el.h+8; wy < PLAY_BOT-8; wy += 12) {
-            for (let wx = ex+4; wx < ex+el.w-4; wx += 10) {
+          for (let wy = PLAY_BOT-el.h+8; wy < PLAY_BOT-8; wy += 12)
+            for (let wx = ex+4; wx < ex+el.w-4; wx += 10)
               if (Math.random() > 0.45) ctx.fillRect(wx, wy, 5, 6);
-            }
-          }
         });
       });
     }
@@ -281,11 +285,13 @@
       const cgl = ctx.createLinearGradient(0, CEIL_H-2, 0, CEIL_H+20);
       cgl.addColorStop(0, 'rgba(124,58,237,0.3)'); cgl.addColorStop(1, 'rgba(124,58,237,0)');
       ctx.fillStyle = cgl; ctx.fillRect(0, CEIL_H-2, W, 22);
+
       ctx.fillStyle = '#1a0a3a'; ctx.fillRect(0, PLAY_BOT, W, GROUND_H);
       ctx.fillStyle = '#7c3aed'; ctx.fillRect(0, PLAY_BOT, W, 2);
       const fgl = ctx.createLinearGradient(0, PLAY_BOT, 0, PLAY_BOT-20);
       fgl.addColorStop(0, 'rgba(124,58,237,0.3)'); fgl.addColorStop(1, 'rgba(124,58,237,0)');
       ctx.fillStyle = fgl; ctx.fillRect(0, PLAY_BOT-20, W, 22);
+
       ctx.strokeStyle = 'rgba(124,58,237,0.2)'; ctx.lineWidth = 1;
       const off = (frame*gameSpeed*0.5) % 40;
       for (let x = -off; x < W; x += 40) {
@@ -294,8 +300,8 @@
     }
 
     function drawBuilding(x, y, width, height, tall = false) {
-      const image = tall ? sprites.buildingTall : sprites.building;
-      drawSprite(image, x, y, width, height, () => {
+      const img = tall ? sprites.buildingTall : sprites.building;
+      drawSprite(img, x, y, width, height, () => {
         ctx.fillStyle = tall ? '#12122e' : '#1a1a3a';
         ctx.fillRect(x, y, width, height);
       });
@@ -306,18 +312,17 @@
       hat.animFrame++;
       if (hat.jetOn) {
         const flameLen = 14 + Math.sin(hat.animFrame*0.4)*6;
-        const flameGrad = ctx.createLinearGradient(hx-20, hy+8, hx-20-flameLen, hy+8);
-        flameGrad.addColorStop(0, 'rgba(251,191,36,0.9)');
-        flameGrad.addColorStop(0.5, 'rgba(249,115,22,0.7)');
-        flameGrad.addColorStop(1, 'rgba(239,68,68,0)');
+        const fg = ctx.createLinearGradient(hx-20, hy+8, hx-20-flameLen, hy+8);
+        fg.addColorStop(0,   'rgba(251,191,36,0.9)');
+        fg.addColorStop(0.5, 'rgba(249,115,22,0.7)');
+        fg.addColorStop(1,   'rgba(239,68,68,0)');
         ctx.beginPath();
         ctx.moveTo(hx-18, hy+3); ctx.lineTo(hx-18-flameLen, hy+8); ctx.lineTo(hx-18, hy+14);
-        ctx.closePath(); ctx.fillStyle = flameGrad; ctx.fill();
+        ctx.closePath(); ctx.fillStyle = fg; ctx.fill();
       }
       ctx.save();
       ctx.translate(hx, hy);
-      const tilt = Math.max(-0.25, Math.min(0.5, hat.vy*0.04));
-      ctx.rotate(tilt);
+      ctx.rotate(Math.max(-0.25, Math.min(0.5, hat.vy*0.04)));
       drawSprite(sprites.hat, -HAT_W/2, -HAT_H, HAT_W, HAT_H, () => {
         ctx.fillStyle = '#7B4A2D';
         ctx.beginPath(); ctx.roundRect(-HAT_W/2, -HAT_H, HAT_W, HAT_H, 4); ctx.fill();
@@ -328,17 +333,19 @@
     function drawObstacles() {
       obstacles.forEach(o => {
         o.phase += 0.08;
+
         if (o.type === 'laser') {
           const pulse = 0.7 + 0.3*Math.sin(o.phase*3);
-          const bGrad = ctx.createLinearGradient(o.x, 0, o.x+o.w, 0);
-          bGrad.addColorStop(0, 'rgba(239,68,68,0)');
-          bGrad.addColorStop(0.3, `rgba(239,68,68,${pulse})`);
-          bGrad.addColorStop(0.7, `rgba(248,113,113,${pulse})`);
-          bGrad.addColorStop(1, 'rgba(239,68,68,0)');
-          ctx.fillStyle = bGrad;
-          ctx.fillRect(o.x, PLAY_TOP, o.w, o.gapY-PLAY_TOP);
-          ctx.fillRect(o.x, o.gapY+o.gapSize, o.w, PLAY_BOT-(o.gapY+o.gapSize));
+          const bg = ctx.createLinearGradient(o.x, 0, o.x+o.w, 0);
+          bg.addColorStop(0,   'rgba(239,68,68,0)');
+          bg.addColorStop(0.3, `rgba(239,68,68,${pulse})`);
+          bg.addColorStop(0.7, `rgba(248,113,113,${pulse})`);
+          bg.addColorStop(1,   'rgba(239,68,68,0)');
+          ctx.fillStyle = bg;
+          ctx.fillRect(o.x, PLAY_TOP, o.w, o.gapY - PLAY_TOP);
+          ctx.fillRect(o.x, o.gapY + o.gapSize, o.w, PLAY_BOT - (o.gapY + o.gapSize));
         }
+
         if (o.type === 'zapper') {
           o.y += Math.sin(o.phase)*o.spd;
           o.y = Math.max(PLAY_TOP+10, Math.min(PLAY_BOT-o.h-10, o.y));
@@ -347,22 +354,23 @@
           ctx.beginPath();
           let ex = o.x; ctx.moveTo(ex, o.y+o.h/2);
           while (ex < o.x+o.w) {
-            ex += 8+Math.random()*6;
+            ex += 8 + Math.random()*6;
             ctx.lineTo(Math.min(ex, o.x+o.w), o.y+4+Math.random()*(o.h-8));
           }
           ctx.stroke();
         }
+
         if (o.type === 'missile') {
           o.trail.push({ x: o.x, y: o.y });
           if (o.trail.length > 18) o.trail.shift();
           o.trail.forEach((pt, i) => {
-            const a = (i / o.trail.length) * 0.5;
+            const a = (i/o.trail.length)*0.5;
             ctx.beginPath(); ctx.arc(pt.x+10, pt.y+5, 4*(i/o.trail.length), 0, Math.PI*2);
             ctx.fillStyle = `rgba(249,115,22,${a})`; ctx.fill();
           });
-          drawSprite(sprites.rocket, o.x - 2, o.y - 8, 56, 28, () => {
+          drawSprite(sprites.rocket, o.x-2, o.y-8, 56, 28, () => {
             ctx.fillStyle = '#6b7280';
-            ctx.beginPath(); ctx.roundRect(o.x, o.y, 42, 12, [6, 6, 2, 2]); ctx.fill();
+            ctx.beginPath(); ctx.roundRect(o.x, o.y, 42, 12, [6,6,2,2]); ctx.fill();
             ctx.fillStyle = '#ef4444';
             ctx.beginPath(); ctx.moveTo(o.x+42, o.y+2); ctx.lineTo(o.x+52, o.y+6); ctx.lineTo(o.x+42, o.y+10); ctx.closePath(); ctx.fill();
           });
@@ -371,44 +379,51 @@
     }
 
     function drawParticles() {
-      for (let i = particles.length - 1; i >= 0; i--) {
+      for (let i = particles.length-1; i >= 0; i--) {
         const p = particles[i];
-        p.x += p.vx; p.y += p.vy; p.vx *= 0.92; p.vy *= 0.92; p.life -= 0.04;
-        if (p.life <= 0) { particles.splice(i, 1); continue; }
+        p.x += p.vx; p.y += p.vy;
+        p.vx *= 0.92; p.vy *= 0.92;
+        p.life -= 0.04;
+        if (p.life <= 0) { particles.splice(i,1); continue; }
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r*p.life, 0, Math.PI*2);
-        ctx.fillStyle = p.col + Math.floor(p.life*255).toString(16).padStart(2, '0');
+        ctx.fillStyle = p.col + Math.floor(p.life*255).toString(16).padStart(2,'0');
         ctx.fill();
       }
     }
 
+    /* ── Collision ── */
     function hatBounds() {
       return {
-        left: HAT_X - HAT_W/2 + 6,
-        right: HAT_X + HAT_W/2 - 6,
-        top: hat.y - HAT_H + 6,
+        left:   HAT_X - HAT_W/2 + 6,
+        right:  HAT_X + HAT_W/2 - 6,
+        top:    hat.y - HAT_H + 6,
         bottom: hat.y + 4
       };
     }
 
     function checkCollisions() {
       const hb = hatBounds();
-// Golv och tak dödar inte längre
       for (const o of obstacles) {
-        if (o.type === 'laser' && hb.right > o.x && hb.left < o.x + o.w) {
-          if (hb.top < o.gapY || hb.bottom > o.gapY + o.gapSize) return true;
-        }
+        if (o.type === 'laser' && hb.right > o.x && hb.left < o.x+o.w)
+          if (hb.top < o.gapY || hb.bottom > o.gapY+o.gapSize) return true;
         if (o.type === 'zapper' && hb.right > o.x+4 && hb.left < o.x+o.w-4 && hb.bottom > o.y && hb.top < o.y+o.h) return true;
         if (o.type === 'missile' && hb.right > o.x+4 && hb.left < o.x+48 && hb.bottom > o.y && hb.top < o.y+12) return true;
       }
       return false;
     }
 
+    /* ── Leaderboard ── */
     function renderLeaderboard() {
-      const sorted = [...groupData].sort((a, b) => currentTab === 'best' ? b.best - a.best : b.games - a.games);
-      const rc = ['gold', 'silver', 'bronze'];
-      lbBody.innerHTML = sorted.map((g, i) => {
-        const label = currentTab === 'best' ? (g.best === 0 ? '—' : g.best + 'm') : (g.games === 0 ? '—' : g.games);
-        return `<div class="lb-row"><span class="lb-rank ${rc[i] || ''}">${i + 1}</span><span class="lb-dot" style="background:${g.color}"></span><span class="lb-gname">${g.name}</span><span class="lb-pts">${label}</span></div>`;
+      const sorted = [...groupData].sort((a,b) => currentTab === 'best' ? b.best-a.best : b.games-a.games);
+      const rc = ['gold','silver','bronze'];
+      lbBody.innerHTML = sorted.map((g,i) => {
+        const label = currentTab === 'best' ? (g.best === 0 ? '—' : g.best+'m') : (g.games === 0 ? '—' : g.games);
+        return `<div class="lb-row">
+          <span class="lb-rank ${rc[i]||''}">${i+1}</span>
+          <span class="lb-dot" style="background:${g.color}"></span>
+          <span class="lb-gname">${g.name}</span>
+          <span class="lb-pts">${label}</span>
+        </div>`;
       }).join('');
     }
 
@@ -416,11 +431,11 @@
       setSyncStatus('laddar...');
       try {
         const res = await fetch('/api/scores');
-        if (!res.ok) throw new Error('load failed');
+        if (!res.ok) throw new Error();
         const rows = await res.json();
         rows.forEach(row => {
-          const g = groupData.find(entry => entry.name === row.group_name);
-          if (g) { g.best = row.best_score || 0; g.games = row.games_played || 0; }
+          const g = groupData.find(e => e.name === row.group_name);
+          if (g) { g.best = row.best_score||0; g.games = row.games_played||0; }
         });
         setSyncStatus('live', 'ok');
       } catch {
@@ -431,7 +446,7 @@
 
     async function saveScore(groupIdx, score) {
       const g = groupData[groupIdx];
-      const newBest = Math.max(g.best, score);
+      const newBest  = Math.max(g.best, score);
       const newGames = g.games + 1;
       setSyncStatus('sparar...');
       try {
@@ -440,27 +455,29 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ group_name: g.name, best_score: newBest, games_played: newGames })
         });
-        if (!res.ok) throw new Error('save failed');
+        if (!res.ok) throw new Error();
         const saved = await res.json();
-        g.best = saved.best_score ?? newBest;
+        g.best  = saved.best_score  ?? newBest;
         g.games = saved.games_played ?? newGames;
         setSyncStatus('sparad ✓', 'ok');
         setTimeout(() => setSyncStatus('live', 'ok'), 2500);
       } catch {
-        g.best = newBest;
+        g.best  = newBest;
         g.games = newGames;
         setSyncStatus('kunde inte spara', 'err');
       }
       renderLeaderboard();
     }
 
+    /* ── Screens ── */
     function showDeadScreen() {
+      const medal = scoreCount>=300?'🥇':scoreCount>=150?'🥈':scoreCount>=60?'🥉':'💀';
       overlay.innerHTML = `
         <div class="title">Spelet slut</div>
-        <div style="font-size:38px">${scoreCount >= 300 ? '🥇' : scoreCount >= 150 ? '🥈' : scoreCount >= 60 ? '🥉' : '💀'}</div>
+        <div style="font-size:38px">${medal}</div>
         <div style="font-size:52px;font-weight:700;color:#c084fc;line-height:1">${scoreCount}m</div>
         <div class="sub" style="margin-bottom:2px">Välj din grupp för att spara poängen</div>
-        <div class="group-grid">${GROUPS.map((g, i) => `
+        <div class="group-grid">${GROUPS.map((g,i) => `
           <div class="g-btn" id="gbtn-${i}" onclick="submitScore(${i})" style="border-color:${GROUP_COLORS[i]}99">
             <span class="g-name" style="color:${GROUP_COLORS[i]}">${g}</span>
             <span class="g-best">bästa: ${groupData[i].best}m</span>
@@ -480,31 +497,48 @@
     }
 
     async function submitScore(groupIdx) {
-      document.querySelectorAll('.g-btn').forEach(btn => btn.style.pointerEvents = 'none');
+      document.querySelectorAll('.g-btn').forEach(b => b.style.pointerEvents = 'none');
       const btn = document.getElementById(`gbtn-${groupIdx}`);
       if (btn) btn.innerHTML = `<span class="saving-spinner"></span>`;
       await saveScore(groupIdx, scoreCount);
       window.location.href = '/';
     }
 
+    /* ── Game loop ── */
     function loop() {
       frame++;
       drawBg();
+
       if (state === 'playing') {
-        gameSpeed = Math.min(OBS_SPEED_MAX, OBS_SPEED_START + (frame / 600));
-        distance += gameSpeed * 0.05;
-        hat.vy += pressing ? JETPACK : GRAVITY * 0.6;
+        gameSpeed = Math.min(OBS_SPEED_MAX, OBS_SPEED_START + (frame/600));
+        distance += gameSpeed*0.05;
+
+        hat.vy += pressing ? JETPACK : GRAVITY*0.6;
         hat.vy = Math.max(MAX_UP, Math.min(MAX_DOWN, hat.vy));
         hat.y += hat.vy;
+
+        // Studsa mot golv och tak — dödar inte
+        if (hat.y - HAT_H < PLAY_TOP) {
+          hat.y = PLAY_TOP + HAT_H;
+          hat.vy = Math.abs(hat.vy) * 0.4;
+        }
+        if (hat.y > PLAY_BOT) {
+          hat.y = PLAY_BOT;
+          hat.vy = -Math.abs(hat.vy) * 0.4;
+        }
+
         hat.jetOn = pressing;
         if (frame % OBS_INTERVAL === 0) spawnObstacle();
-        for (let i = obstacles.length - 1; i >= 0; i--) {
+
+        for (let i = obstacles.length-1; i >= 0; i--) {
           obstacles[i].x -= gameSpeed;
-          if (obstacles[i].x + 80 < 0) obstacles.splice(i, 1);
+          if (obstacles[i].x + 80 < 0) obstacles.splice(i,1);
         }
+
         scoreCount = Math.floor(distance);
         scoreEl.textContent = scoreCount;
-        distEl.textContent = `${scoreCount} m`;
+        distEl.textContent  = `${scoreCount} m`;
+
         if (checkCollisions()) {
           burst(HAT_X, hat.y, '#c084fc', 20);
           burst(HAT_X, hat.y, '#ffffff', 10);
@@ -514,14 +548,20 @@
           runsEl.textContent = totalRuns;
           setTimeout(showDeadScreen, 600);
         }
+
       } else if (state === 'idle') {
         hat.y = PLAY_TOP + PLAY_H/2 + Math.sin(frame*0.04)*15;
         hat.jetOn = false;
       }
-      drawObstacles(); drawParticles(); drawGround(); drawHat();
+
+      drawObstacles();
+      drawParticles();
+      drawGround();
+      drawHat();
       raf = requestAnimationFrame(loop);
     }
 
+    /* ── Input ── */
     function pressStart(e) {
       e.preventDefault();
       if (state === 'idle') { startGame(); return; }
@@ -529,16 +569,27 @@
     }
     function pressEnd(e) { e.preventDefault(); pressing = false; }
 
-    canvas.addEventListener('pointerdown', pressStart);
-    canvas.addEventListener('pointerup', pressEnd);
+    canvas.addEventListener('pointerdown',  pressStart);
+    canvas.addEventListener('pointerup',    pressEnd);
     canvas.addEventListener('pointerleave', pressEnd);
     canvas.addEventListener('touchstart', pressStart, { passive: false });
-    canvas.addEventListener('touchend', pressEnd, { passive: false });
+    canvas.addEventListener('touchend',   pressEnd,   { passive: false });
     document.getElementById('start-btn').addEventListener('click', startGame);
-    tabBest.addEventListener('click', () => { currentTab = 'best'; tabBest.className = 'lb-tab active'; tabGames.className = 'lb-tab'; renderLeaderboard(); });
-    tabGames.addEventListener('click', () => { currentTab = 'games'; tabGames.className = 'lb-tab active'; tabBest.className = 'lb-tab'; renderLeaderboard(); });
 
-    window.startGame = startGame;
+    tabBest.addEventListener('click', () => {
+      currentTab = 'best';
+      tabBest.className  = 'lb-tab active';
+      tabGames.className = 'lb-tab';
+      renderLeaderboard();
+    });
+    tabGames.addEventListener('click', () => {
+      currentTab = 'games';
+      tabGames.className = 'lb-tab active';
+      tabBest.className  = 'lb-tab';
+      renderLeaderboard();
+    });
+
+    window.startGame   = startGame;
     window.submitScore = submitScore;
 
     initGame();

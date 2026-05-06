@@ -64,6 +64,10 @@
       background: linear-gradient(135deg, var(--kth-blue), var(--porter-brun));
       color: #fff; box-shadow: 0 18px 30px rgba(0, 71, 145, 0.28);
     }
+    .btn.primary:disabled {
+      opacity: 0.45; cursor: not-allowed;
+      box-shadow: none;
+    }
     .btn.secondary {
       background: rgba(62, 96, 124, 0.15);
       color: var(--komplement-bla);
@@ -73,7 +77,7 @@
       background: rgba(62, 96, 124, 0.25);
       color: #fff;
     }
-    .btn:active { transform: scale(0.98); }
+    .btn:active:not(:disabled) { transform: scale(0.98); }
     .games {
       padding: 20px; display: grid; gap: 12px;
     }
@@ -89,6 +93,7 @@
       background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
       color: #fff; font-family: inherit;
       display: grid; gap: 6px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
     }
     .game-card:hover { transform: translateY(-1px); border-color: var(--komplement-bla); }
     .game-card.featured {
@@ -100,8 +105,35 @@
       font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
       color: var(--sky-blue);
     }
+    .badge.locked { color: #ff6b6b; }
     .name { font-size: 22px; font-weight: 700; line-height: 1.05; }
     .desc { font-size: 13px; color: rgba(255,255,255,0.68); line-height: 1.6; }
+
+    /* Play counter pill */
+    .plays-left {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 18px; padding: 8px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 12px; letter-spacing: 1px; color: rgba(255,255,255,0.65);
+    }
+    .plays-left .pip {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #06D6A0;
+    }
+    .plays-left .pip.empty { background: rgba(255,255,255,0.2); }
+    .plays-left.exhausted { border-color: rgba(255,107,107,0.4); }
+    .plays-left.exhausted .label { color: #ff6b6b; }
+
+    /* Locked banner */
+    .locked-banner {
+      margin-top: 14px; padding: 12px 16px; border-radius: 14px;
+      background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3);
+      font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5;
+      display: none;
+    }
+    .locked-banner.visible { display: block; }
+
     @media (max-width: 820px) {
       .hero { grid-template-columns: 1fr; }
     }
@@ -114,8 +146,22 @@
         <div class="eyebrow">n0llangames</div>
         <h1>Välj ditt spel</h1>
         <p class="copy">Välkommen till n0llangames. Här hittar du de senaste spelen från I-sektionen. Spela direkt i webbläsaren!</p>
+
+        <!-- Play counter -->
+        <div class="plays-left" id="plays-counter">
+          <span class="pip" id="pip-1"></span>
+          <span class="pip" id="pip-2"></span>
+          <span class="pip" id="pip-3"></span>
+          <span class="label" id="plays-label">Laddar...</span>
+        </div>
+
+        <!-- Locked message -->
+        <div class="locked-banner" id="locked-banner">
+          🎩 Du har spelat klart för idag! Kom tillbaka imorgon för fler omgångar.
+        </div>
+
         <div class="actions">
-          <button class="btn primary" id="launch-first">Spela Jetpack Joyride</button>
+          <button class="btn primary" id="launch-first" disabled>Spela Jetpack Joyride</button>
           <button class="btn secondary" id="view-games">Visa alla spel</button>
         </div>
       </div>
@@ -130,9 +176,87 @@
   </main>
 
   <script>
-    const gameList = document.getElementById('game-list');
+    /* ── Play limit config ── */
+    const MAX_PLAYS_PER_DAY = 3;
+    const STORAGE_KEY = 'n0llan_plays';
+
+    function getTodayString() {
+      return new Date().toDateString(); // e.g. "Wed May 06 2026"
+    }
+
+    function getPlayData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { date: getTodayString(), count: 0 };
+        const data = JSON.parse(raw);
+        // If it's a new day, reset the counter
+        if (data.date !== getTodayString()) {
+          return { date: getTodayString(), count: 0 };
+        }
+        return data;
+      } catch {
+        return { date: getTodayString(), count: 0 };
+      }
+    }
+
+    function getPlaysLeft() {
+      const data = getPlayData();
+      return Math.max(0, MAX_PLAYS_PER_DAY - data.count);
+    }
+
+    function registerPlay() {
+      const data = getPlayData();
+      data.count = (data.count || 0) + 1;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function canPlay() {
+      return getPlaysLeft() > 0;
+    }
+
+    /* ── Update UI based on plays left ── */
+    function updatePlayCounter() {
+      const left = getPlaysLeft();
+      const counter = document.getElementById('plays-counter');
+      const label   = document.getElementById('plays-label');
+      const banner  = document.getElementById('locked-banner');
+      const btn     = document.getElementById('launch-first');
+
+      // Update pip dots
+      for (let i = 1; i <= MAX_PLAYS_PER_DAY; i++) {
+        const pip = document.getElementById(`pip-${i}`);
+        if (!pip) continue;
+        pip.classList.toggle('empty', i > left);
+      }
+
+      if (left === 0) {
+        label.textContent = 'Inga omgångar kvar idag';
+        counter.classList.add('exhausted');
+        banner.classList.add('visible');
+        btn.disabled = true;
+      } else {
+        label.textContent = `${left} av ${MAX_PLAYS_PER_DAY} omgångar kvar idag`;
+        counter.classList.remove('exhausted');
+        banner.classList.remove('visible');
+        btn.disabled = false;
+      }
+    }
+
+    /* ── Launch with play registration ── */
+    function launchGame(path) {
+      if (!canPlay()) {
+        updatePlayCounter();
+        return;
+      }
+      registerPlay();
+      updatePlayCounter();
+      window.location.href = path;
+    }
+
+    /* ── Game catalog ── */
+    const gameList   = document.getElementById('game-list');
     const launchFirst = document.getElementById('launch-first');
-    const viewGames = document.getElementById('view-games');
+    const viewGames  = document.getElementById('view-games');
 
     async function loadCatalog() {
       try {
@@ -140,28 +264,47 @@
         if (!response.ok) throw new Error('Kunde inte ladda katalogen');
         const games = await response.json();
         renderGames(games);
-        const firstPlayable = games.find(game => game.status === 'playable');
+
+        const firstPlayable = games.find(g => g.status === 'playable');
         if (firstPlayable) {
           launchFirst.innerText = `Spela ${firstPlayable.title}`;
-          launchFirst.addEventListener('click', () => window.location.href = firstPlayable.path);
+          launchFirst.addEventListener('click', () => launchGame(firstPlayable.path));
         }
       } catch {
         gameList.innerHTML = '<div class="desc">Inga spel hittades.</div>';
       }
+
+      // Always update counter after catalog loads
+      updatePlayCounter();
     }
 
     function renderGames(games) {
-      gameList.innerHTML = games.map(game => `
-        <button class="game-card ${game.featured ? 'featured' : ''}" data-path="${game.path}">
-          <span class="badge">${game.status === 'playable' ? 'Spela nu' : 'Kommer snart'}</span>
-          <span class="name">${game.title}</span>
-          <span class="desc">${game.description}</span>
-        </button>
-      `).join('');
+      const left = getPlaysLeft();
+      gameList.innerHTML = games.map(game => {
+        const locked = game.status === 'playable' && left === 0;
+        return `
+          <button
+            class="game-card ${game.featured ? 'featured' : ''} ${locked ? 'disabled' : ''}"
+            data-path="${game.path}"
+            data-playable="${game.status === 'playable'}"
+            ${locked ? 'disabled' : ''}
+          >
+            <span class="badge ${locked ? 'locked' : ''}">
+              ${locked ? 'Låst idag' : game.status === 'playable' ? 'Spela nu' : 'Kommer snart'}
+            </span>
+            <span class="name">${game.title}</span>
+            <span class="desc">${game.description}</span>
+          </button>
+        `;
+      }).join('');
 
       gameList.querySelectorAll('[data-path]').forEach(card => {
         card.addEventListener('click', () => {
-          window.location.href = card.dataset.path;
+          if (card.dataset.playable === 'true') {
+            launchGame(card.dataset.path);
+          } else {
+            window.location.href = card.dataset.path;
+          }
         });
       });
     }

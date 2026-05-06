@@ -466,7 +466,7 @@
             <span class="g-best">bästa: ${groupData[i].best}m</span>
           </div>`).join('')}
         </div>
-        <button class="btn secondary" onclick="startGame()">Hoppa över • spela igen</button>
+        <button class="btn secondary" onclick="window.location.href='/'">Tillbaka till menyn</button>
       `;
       overlay.classList.remove('hidden');
     }
@@ -484,7 +484,7 @@
       const btn = document.getElementById(`gbtn-${groupIdx}`);
       if (btn) btn.innerHTML = `<span class="saving-spinner"></span>`;
       await saveScore(groupIdx, scoreCount);
-      startGame();
+      window.location.href = '/';
     }
 
     function loop() {
